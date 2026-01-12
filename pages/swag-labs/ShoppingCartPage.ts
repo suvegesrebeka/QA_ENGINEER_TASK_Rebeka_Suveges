@@ -56,5 +56,4 @@ export class ShoppingCartPage {
         await this.removedCartItem.waitFor({ state: 'hidden' });
 
     }
-
 }

@@ -30,7 +30,6 @@ export class LoginPage {
         await this.passwordInput.fill(env.users.standard.password);
         await this.loginButton.click();
         await expect(this.page).toHaveURL(landingPageUrl)
-
     }
 
     async expectLoginErrorMessage(errorType: keyof typeof loginErrorMessages) {
@@ -39,6 +38,5 @@ export class LoginPage {
 
         await expect(this.errorMessage).toBeVisible();
         expect(actualText).toContain(expectedText);
-
     }
 }
