@@ -4,10 +4,13 @@ export class CheckoutPage {
     private page: Page;
     private checkoutButton: Locator;
     private checkoutSummaryContainer: Locator;
+    private checkoutCompleteContainer: Locator;
+
     constructor(page: Page) {
         this.page = page;
         this.checkoutButton = page.locator('[data-test="checkout"]');
         this.checkoutSummaryContainer = page.locator('[data-test="checkout-summary-container"]');
+        this.checkoutCompleteContainer = page.locator('[data-test="checkout-complete-container"]');
     }
 
     async proceedToCheckout() {
@@ -25,15 +28,19 @@ export class CheckoutPage {
         await continueButton.click();
     }
 
-    async verifyItemInOverview(randomItem: Locator) {
-        console.log("RANDOM ITEM", randomItem.innerHTML());
+    async verifyItemInOverview(itemData: { name: string; price: string }) {
+        const randomItemName = itemData.name;
+        const randomItemPrice = itemData.price;
+        const checkoutItemName = this.checkoutSummaryContainer.locator('[data-test="inventory-item-name"]').first();
+        const checkoutItemPrice = this.checkoutSummaryContainer.locator('[data-test="inventory-item-price"]').first();
 
-        const randomItemName = await randomItem.locator('[data-test="inventory_item_name"]').textContent() || '';
-        const randomItemPrice = await randomItem.locator('[data-test="inventory_item_price"]').textContent() || '';
-        const checkoutItemName = this.checkoutSummaryContainer.locator('[data-test="inventory_item_name"]');
-        const checkoutItemPrice = this.checkoutSummaryContainer.locator('[data-test="inventory_item_price"]');
+        await expect(checkoutItemName).toContainText(randomItemName);
+        await expect(checkoutItemPrice).toContainText(randomItemPrice);
+        const finishButton = this.page.locator('button[data-test="finish"]');
+        await finishButton.click();
+    }
 
-        expect(checkoutItemName).toContainText(randomItemName);
-        expect(checkoutItemPrice).toContainText(randomItemPrice);
+    async verifyCheckout() {
+        await expect(this.checkoutCompleteContainer).toBeVisible();
     }
 }

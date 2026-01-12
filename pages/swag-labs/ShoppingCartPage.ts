@@ -22,18 +22,23 @@ export class ShoppingCartPage {
 
     async addRandomItemToCart() {
         const items = this.inventoryList.locator('.inventory_item');
-        const itemCount = await items.count();
+        const itemCount = await items.count() - 1;
         const randomIndex = Math.floor(Math.random() * itemCount);
         const randomItem = items.nth(randomIndex);
         const addToCartButton = randomItem.locator('button[data-test^="add-to-cart-sauce-labs-"]');
-
+        await addToCartButton.waitFor({ state: 'visible', timeout: 10000 });
         await addToCartButton.click();
-        return randomItem
+
+        const name = await randomItem.locator('.inventory_item_name').innerText();
+        const price = await randomItem.locator('.inventory_item_price').innerText();
+
+
+        return { name, price };
     }
 
-    async verifyItemInCart(randomItem: Locator) {
-        const randomItemName = await randomItem.locator('.inventory_item_name').textContent() || '';
-        const randomItemPrice = await randomItem.locator('.inventory_item_price').textContent() || '';
+    async verifyItemInCart(itemData: { name: string; price: string }) {
+        const randomItemName = itemData.name;
+        const randomItemPrice = itemData.price;
 
         await this.shoppingCartButton.click();
         await expect(
