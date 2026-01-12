@@ -7,6 +7,7 @@ test.describe('Login Feature', () => {
         await page.goto(env.uiBaseUrl);
     });
 
+    // Test: standard user can login and is redirected to the landing page
     test('Successful login with standard user', async ({ page }) => {
         const landingPageUrl = env.uiBaseUrl + env.homePageUrl;
         const { username, password } = env.users.standard;
@@ -15,6 +16,7 @@ test.describe('Login Feature', () => {
         await expect(page).toHaveURL(landingPageUrl);
     });
 
+    // Test: invalid credentials show the correct error message and stay on login
     test('Login fails with invalid password', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const { username, password } = env.users.invalid;
@@ -24,6 +26,7 @@ test.describe('Login Feature', () => {
         await expect(page).toHaveURL(env.uiBaseUrl);
     });
 
+    // Test: locked out user receives the LOCKED_OUT message and cannot login
     test('Locked out user cannot login', async ({ page }) => {
         const loginPage = new LoginPage(page);
         const { username, password } = env.users.locked;

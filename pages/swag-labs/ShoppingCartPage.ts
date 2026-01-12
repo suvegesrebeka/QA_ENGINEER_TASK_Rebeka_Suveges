@@ -20,6 +20,11 @@ export class ShoppingCartPage {
         this.checkoutButton = page.locator('[data-test="checkout"]');
     }
 
+    /**
+     * Selects a random item from the inventory list and adds it to the cart.
+     * Waits for the add-to-cart button to be visible before clicking.
+     * Returns the added item's `name` and `price` for later verification.
+     */
     async addRandomItemToCart() {
         const items = this.inventoryList.locator('.inventory_item');
         const itemCount = await items.count() - 1;
@@ -32,10 +37,15 @@ export class ShoppingCartPage {
         const name = await randomItem.locator('.inventory_item_name').innerText();
         const price = await randomItem.locator('.inventory_item_price').innerText();
 
-
         return { name, price };
     }
 
+    /**
+     * Verifies that an item matching the provided `name` and `price` is present
+     * in the shopping cart. Navigates to the cart and asserts the item and
+     * quantity are correct.
+     * @param itemData Object with `name` and `price` fields to assert in the cart
+     */
     async verifyItemInCart(itemData: { name: string; price: string }) {
         const randomItemName = itemData.name;
         const randomItemPrice = itemData.price;
@@ -50,6 +60,10 @@ export class ShoppingCartPage {
         await expect(this.itemQuantity).toContainText('1');
     }
 
+    /**
+     * Removes an item from the cart by clicking the remove button and waits
+     * for the item to be removed from the DOM.
+     */
     async removeItemFromCart() {
         const removeButton = this.page.locator('button[data-test^="remove-sauce-labs-"]');
         await removeButton.click();

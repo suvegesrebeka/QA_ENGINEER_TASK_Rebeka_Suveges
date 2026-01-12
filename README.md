@@ -37,5 +37,5 @@ INVALID_USER_PASSWORD=invalid_secret_sauce
 - Run only UI tests: `npx playwright test tests/ui`
 - Run only API tests: `npx playwright test tests/api`
 
-**Reports**:
-- /reports folder (specified in point 3 of each task under the ‘Details’ section.)
+**Detailed Report about the project**:
+- In the report folder, there is a comprehensive report of my work and an explanation of my solutions.

@@ -12,6 +12,7 @@ test.describe('Shopping Cart Flow', () => {
         await loginPage.successfulLogin();
     });
 
+    // Test: add a random inventory item to the cart, verify it appears, then remove it
     test('Add item to the cart and remove it', async ({ page }) => {
         const shoppingCartPage = new ShoppingCartPage(page)
         let selectedRandomItemData: { name: string; price: string };
@@ -25,6 +26,7 @@ test.describe('Shopping Cart Flow', () => {
         })
     });
 
+    // Test: complete checkout flow — add item, fill details, verify overview and completion
     test("Checkout process", async ({ page }) => {
         const shoppingCartPage = new ShoppingCartPage(page)
         const checkoutPage = new CheckoutPage(page)

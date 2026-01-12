@@ -6,6 +6,7 @@ test.describe('Petstore API - Update Pet in the store with Form Data', () => {
     const newName = `BarkaUpdated_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
     const newStatus = 'sold';
 
+    // Test: update an existing pet using form data and assert 200 + expected body
     test('should update pet name and status using form data', async ({ request }) => {
         const response = await request.post(`${env.apiBaseUrl}/${id}`, {
             form: {
@@ -22,6 +23,7 @@ test.describe('Petstore API - Update Pet in the store with Form Data', () => {
 
     });
 
+    // Test: attempt to update a non-existent pet id and expect a 404 response
     test('should return 404 when pet id does not exist', async ({ request }) => {
         const NON_EXISTENT_ID = 4444444;
 

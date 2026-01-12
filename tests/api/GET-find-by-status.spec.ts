@@ -6,6 +6,8 @@ import { env } from '../../utils/envWrapper';
 
 test.describe('PetStore API - Find Pets by Status', () => {
 
+  // Test: request pets with status 'sold' and assert all returned pets are sold
+  // and contain required fields 
   test('should return only sold pets', async ({ request }) => {
     const response = await request.get(`${env.apiBaseUrl}${env.findByStatusEndpoint}`, {
       params: { status: PetStatus.SOLD }
@@ -24,13 +26,13 @@ test.describe('PetStore API - Find Pets by Status', () => {
     });
   });
 
-
+  // Test: request pets with an invalid status value and expect an empty array
   test('should return empty array for invalid status', async ({ request }) => {
-    const response = await request.get(`https://petstore.swagger.io/v2/pet/findByStatus`, {
+    const response = await request.get(`${env.apiBaseUrl}${env.findByStatusEndpoint}`, {
       params: { status: 'invalidStatus' }
     });
 
-    expect(response.status()).toBe(200);
+    expect(response.status()).toBe(200);// ERROR - According to the documentation, it should return a 400 response.
     const pets = await response.json();
 
     expect(pets).toEqual([]);

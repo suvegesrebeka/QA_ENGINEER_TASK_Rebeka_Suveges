@@ -17,12 +17,21 @@ export class LoginPage {
         this.errorMessage = page.locator('[data-test="error"]');
     }
 
+    /**
+     * Perform a login using the provided credentials.
+     * Fills the username and password fields and clicks the login button.
+     */
     async login(username: string, password: string) {
         await this.usernameInput.fill(username);
         await this.passwordInput.fill(password);
         await this.loginButton.click();
     }
 
+    /**
+     * Perform a successful login using the configured `standard` user from `env`.
+     * After submitting the credentials, asserts that the page navigated to the
+     * expected landing (home) URL.
+     */
     async successfulLogin() {
         const landingPageUrl = env.uiBaseUrl + env.homePageUrl;
 
@@ -32,6 +41,12 @@ export class LoginPage {
         await expect(this.page).toHaveURL(landingPageUrl)
     }
 
+    /**
+     * Verify that an expected login error message is displayed.
+     * Looks up the expected message text from `loginErrorMessages` and asserts
+     * the error container is visible and contains the expected text.
+     * @param errorType Key of the expected error message in `loginErrorMessages`
+     */
     async expectLoginErrorMessage(errorType: keyof typeof loginErrorMessages) {
         const expectedText = loginErrorMessages[errorType];
         const actualText = await this.errorMessage.textContent();
