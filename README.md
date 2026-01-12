@@ -1,6 +1,6 @@
 **QA Engineer Task — Swag Labs**
 
-This repository contains Playwright-based UI and API tests for the Swag Labs sample application used in the QA Engineer task.
+This repository contains Playwright-based UI and API tests for Betsson Group interview.
 
 **Prerequisites**:
 - **Node**: Install Node.js (recommended v16+).
