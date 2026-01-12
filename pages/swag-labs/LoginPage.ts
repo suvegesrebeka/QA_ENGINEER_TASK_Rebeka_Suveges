@@ -1,5 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { loginErrorMessages } from '../../utils/loginErrorMessages';
+import { loginErrorMessages } from '../../utils/ui/loginErrorMessages';
 import { env } from '../../utils/envWrapper';
 
 export class LoginPage {
