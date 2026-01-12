@@ -3,6 +3,7 @@ export const env = {
     homePageUrl: process.env.homePageUrl as string,
     cartPageUrl: process.env.cartPageUrl as string,
     apiBaseUrl: process.env.apiBaseUrl as string,
+    findByStatusEndpoint: process.env.findByStatusEndpoint as string,
     firstName: process.env.firstName as string,
     lastName: process.env.lastName as string,
     zipCode: process.env.zipCode as string,
