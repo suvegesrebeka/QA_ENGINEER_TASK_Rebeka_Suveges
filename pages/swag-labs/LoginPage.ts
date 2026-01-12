@@ -1,5 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { loginErrorMessages } from '../../utils/loginErrorMessages';
+import { env } from '../../utils/envWrapper';
 
 export class LoginPage {
     private page: Page;
@@ -22,10 +23,21 @@ export class LoginPage {
         await this.loginButton.click();
     }
 
+    async successfulLogin() {
+        const landingPageUrl = env.uiBaseUrl + env.homePageUrl;
+
+        await this.usernameInput.fill(env.users.standard.username);
+        await this.passwordInput.fill(env.users.standard.password);
+        await this.loginButton.click();
+        await expect(this.page).toHaveURL(landingPageUrl)
+
+    }
+
     async expectLoginErrorMessage(errorType: keyof typeof loginErrorMessages) {
-        await expect(this.errorMessage).toBeVisible();
         const expectedText = loginErrorMessages[errorType];
         const actualText = await this.errorMessage.textContent();
+
+        await expect(this.errorMessage).toBeVisible();
         expect(actualText).toContain(expectedText);
 
     }

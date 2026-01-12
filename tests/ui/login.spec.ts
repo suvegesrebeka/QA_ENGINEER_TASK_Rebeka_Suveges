@@ -11,7 +11,6 @@ test.describe('Login Feature', () => {
         const landingPageUrl = env.uiBaseUrl + env.homePageUrl;
         const { username, password } = env.users.standard;
         const loginPage = new LoginPage(page);
-
         await loginPage.login(username, password);
         await expect(page).toHaveURL(landingPageUrl);
     });
